@@ -17,8 +17,8 @@ class ToDo(models.Model):
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    project_id = models.ForeignKey(Project, on_delete=models.PROTECT)
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    # project_id = models.ForeignKey(Project, on_delete=models.PROTECT)
+    # user_id = models.ForeignKey(User, on_delete=models.PROTECT)
 
 
 class UserProject(models.Model):
