@@ -11,9 +11,6 @@ class Project(models.Model):
         return self.name
 
 
-class UserProject(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    project_id = models.ForeignKey(Project, on_delete=models.PROTECT)
 
 
 class ToDo(models.Model):
@@ -22,3 +19,9 @@ class ToDo(models.Model):
     is_active = models.BooleanField(default=True)
     project_id = models.ForeignKey(Project, on_delete=models.PROTECT)
     user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+
+
+class UserProject(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    project_id = models.ForeignKey(Project, on_delete=models.PROTECT)
+    todo_id = models.ForeignKey(ToDo, on_delete=models.PROTECT)
