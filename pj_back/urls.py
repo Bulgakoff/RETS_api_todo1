@@ -27,6 +27,10 @@ router.register('pj_to_users_base', UserProjectTasksViewSet)
 # router.register('pj_to_users_base', UserProjectTasksViewSet, basename='utpb')
 
 urlpatterns = [
+    # NamespaceVersioning
+    path('api_version/users/0.1', include('userapp.urls', namespace='0.1')),
+    path('api_version/users/0.2', include('userapp.urls', namespace='0.2')),
+    # UrlPathVersioning
     re_path(r'^api_version/(?P<version>\d\.\d)/users/$', UserListAPIView.as_view()),
 
     # ViewSets  :
