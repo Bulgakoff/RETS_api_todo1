@@ -8,6 +8,7 @@ const UserItem = ({item}) => {
             <td>{item.user_id.username}</td>
             <td>{item.user_id.date_joined}</td>
             <td>{item.project_id.name}</td>
+            <td>{item.todo_id.text}</td>
         </tr>
     )
 }
@@ -25,6 +26,7 @@ const ProjectUserList = ({items}) => {
                 <th>username</th>
                 <th>date_joined</th>
                 <th>Категория(Проект)</th>
+                <th>Что делать</th>
             </tr>
             {filtered_items.map((item) => <UserItem item={item} />)}
         </table>
