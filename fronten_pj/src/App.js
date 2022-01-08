@@ -56,7 +56,7 @@ class App extends React.Component {
         }
     }
 
-    componentDidMount() {
+    load_data() {
         axios.get('http://127.0.0.1:8000/viewsets/user_base')
             .then(response => {
                 console.log(response.data)
@@ -82,8 +82,10 @@ class App extends React.Component {
                 console.log(response.data)
                 this.setState({ptus: response.data})
             }).catch(error => console.log(error))
+    }
 
-
+    componentDidMount() {
+        this.load_data()
     }
 
     render() {
