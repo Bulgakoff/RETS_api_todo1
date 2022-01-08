@@ -16,6 +16,7 @@ const PtuItem = ({item}) => {
 const PtuList = ({items}) => {
     return (
         <table>
+            <h1>общий список :</h1>
             <tr>
                 <th>ID</th>
                 <th>Проект</th>

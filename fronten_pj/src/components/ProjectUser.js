@@ -19,6 +19,7 @@ const ProjectUserList = ({items}) => {
     let filtered_items = items.filter((item) => item.project_id.id == id)
     return (
         <table>
+            <h1>Список пользователей:</h1>
             <tr>
                 <th>ID</th>
                 <th>username</th>

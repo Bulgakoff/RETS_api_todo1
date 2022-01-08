@@ -18,6 +18,7 @@ const TodoIdProjectList = ({items}) => {
     let filtered_items = items.filter((item) => item.todo_id.id == id)
     return (
         <table>
+            <h1>список Проектов:</h1>
             <tr>
                 <th>ID</th>
                 <th>Название проекта</th>

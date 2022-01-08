@@ -20,6 +20,7 @@ const ProjectTodoList = ({items}) => {
     let filtered_items = items.filter((item) => item.user_id.id == id)
     return (
         <table>
+            <h1>Список задач:</h1>
             <tr>
                 <th>ID</th>
                 <th>text</th>
