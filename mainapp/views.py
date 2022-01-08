@@ -45,3 +45,5 @@ class UserProjectTasksViewSet(viewsets.ModelViewSet):
     # permission_classes = [AllowAny]
     serializer_class = UserProjectModelSerializer
     queryset = UserProject.objects.all()
+
+
