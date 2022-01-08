@@ -5,9 +5,9 @@ const PtuItem = ({item}) => {
     return (
         <tr>
             <td>{item.id}</td>
-            <td>{item.project_id}</td>
-            <td>{item.todo_id}</td>
-            <td>{item.user_id}</td>
+            <td>{item.project_id.name}</td>
+            <td>{item.todo_id.text}</td>
+            <td>{item.user_id.username}</td>
         </tr>
     )
 }
@@ -18,9 +18,9 @@ const PtuList = ({items}) => {
         <table>
             <tr>
                 <th>ID</th>
-                <th>project_id</th>
-                <th>todo_id</th>
-                <th>user_id</th>
+                <th>Проект</th>
+                <th>Задача</th>
+                <th>Кто выполняет</th>
             </tr>
             {items.map((item) => <PtuItem item={item}/>)}
         </table>

@@ -14,7 +14,7 @@ const TodoItem = ({item}) => {
 }
 
 
-const UserTodoList = ({items}) => {
+const ProjectTodoList = ({items}) => {
 
     let { id } = useParams();
     let filtered_items = items.filter((item) => item.user_id.id == id)
@@ -32,4 +32,4 @@ const UserTodoList = ({items}) => {
     )
 }
 
-export default UserTodoList
+export default ProjectTodoList

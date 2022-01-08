@@ -1,10 +1,11 @@
 import React from 'react'
+import {Link} from "react-router-dom";
 
 
 const TodoItem = ({item}) => {
     return (
         <tr>
-            <td>{item.id}</td>
+             <td><Link to={`todo/${item.id}`}>{item.id}</Link></td>
             <td>{item.text}</td>
             <td>{item.created_at}</td>
         </tr>

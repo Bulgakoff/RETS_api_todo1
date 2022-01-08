@@ -151,8 +151,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 5,
 }
 
 print('you WORKED DIGITAL')
@@ -183,6 +183,6 @@ LOGGING = {
 }
 
 CORS_ALLOWED_ORIGINS = [
-    # 'http://localhost:3000',
-    'http://localhost:3001',
+    'http://localhost:3000',
+    # 'http://localhost:3001',
 ]
