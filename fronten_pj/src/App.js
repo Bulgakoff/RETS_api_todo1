@@ -8,6 +8,7 @@ import ProjectUserList from './components/ProjectUser.js'
 import TodoIdProjectList from './components/TodoPjUsers.js'
 import {HashRouter, Route, Link, Switch, Redirect} from 'react-router-dom'
 import axios from 'axios'
+import LoginForm from './components/Auth.js'
 
 
 const NotFound404 = ({location}) => {
@@ -54,6 +55,13 @@ class App extends React.Component {
             'projects': [],
             'ptus': []
         }
+    }
+
+    get_token(username, password) {
+        axios.post('http://127.0.0.1:8000/api-token-auth/', {username: username, password: password})
+            .then(response => {
+                console.log(response.data)
+            }).catch(error => alert('Неверный логин или пароль'))
     }
 
     load_data() {
@@ -106,6 +114,9 @@ class App extends React.Component {
                             <li>
                                 <Link to='/ptu_info'>Ptus</Link>
                             </li>
+                            <li>
+                                <Link to='/login'>Login</Link>
+                            </li>
                         </ul>
                     </nav>
                     <Switch>
@@ -113,6 +124,7 @@ class App extends React.Component {
                         <Route exact path='/todoes' component={() => <TodoList items={this.state.todoes}/>}/>
                         <Route exact path='/projects' component={() => <ProjectList items={this.state.projects}/>}/>
                         <Route exact path='/ptu_info' component={() => <PtuList items={this.state.ptus}/>}/>
+                        <Route exact path='/login' component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />}/>
                         <Route path="/project/:id">
                             <ProjectUserList items={this.state.ptus}/>
                         </Route>
