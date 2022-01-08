@@ -60,7 +60,7 @@ class App extends React.Component {
     set_token(token) {
         const cookies = new Cookies()
         cookies.set('token', token)
-        this.setState({'token': token})
+        this.setState({'token': token}, ()=>this.load_data())
     }
 
     is_authenticated() {
@@ -74,7 +74,7 @@ class App extends React.Component {
     get_token_from_storage() {
         const cookies = new Cookies()
         const token = cookies.get('token')
-        this.setState({'token': token})
+        this.setState({'token': token}, () => this.load_data())
     }
 
     get_token(username, password) {
@@ -84,28 +84,39 @@ class App extends React.Component {
             }).catch(error => alert('Неверный логин или пароль'))
     }
 
+    get_headers() {
+        let headers = {
+            'Content-Type': 'application/json'
+        }
+        if (this.is_authenticated()) {
+            headers['Authorization'] = 'Token ' + this.state.token
+        }
+        return headers
+    }
+
     load_data() {
-        axios.get('http://127.0.0.1:8000/viewsets/user_base')
+        const headers = this.get_headers()
+        axios.get('http://127.0.0.1:8000/viewsets/user_base', {headers})
             .then(response => {
                 console.log(response.data)
                 this.setState({users: response.data})
             }).catch(error => console.log(error))
 
-        axios.get('http://127.0.0.1:8000/viewsets/todo_base/')
+        axios.get('http://127.0.0.1:8000/viewsets/todo_base/', {headers})
             .then(response => {
                 console.log(response.data)
                 this.setState({todoes: response.data})
             }).catch(error => console.log(error))
 
 
-        axios.get('http://127.0.0.1:8000/viewsets/pj_base/')
+        axios.get('http://127.0.0.1:8000/viewsets/pj_base/', {headers})
             .then(response => {
                 console.log(response.data)
                 this.setState({projects: response.data})
             }).catch(error => console.log(error))
 
 
-        axios.get('http://127.0.0.1:8000/viewsets/pj_to_users_base/')
+        axios.get('http://127.0.0.1:8000/viewsets/pj_to_users_base/', {headers})
             .then(response => {
                 console.log(response.data)
                 this.setState({ptus: response.data})
@@ -114,7 +125,7 @@ class App extends React.Component {
 
     componentDidMount() {
         this.get_token_from_storage()
-        this.load_data()
+        // this.load_data()
     }
 
     render() {
