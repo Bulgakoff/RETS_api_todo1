@@ -9,6 +9,16 @@ class UserModelSerializer(ModelSerializer):  # 1
         fields = "__all__"
 
 
+class UserSerializerIsSuperuserIsStaff(ModelSerializer):
+    """
+    fields is_superuser, is_staff will be available
+    """
+
+    class Meta:
+        model = User
+        fields = ('is_superuser', 'is_staff')
+
+
 class UserSerializerBase(ModelSerializer):
     # QueryParameterVersioning
     class Meta:
@@ -32,6 +42,7 @@ class UserProjectModelSerializer(ModelSerializer):  # 4
     user_id = UserModelSerializer()
     project_id = ProjectModelSerializer()
     todo_id = ToDoModelSerializer()
+
     class Meta:
         model = UserProject
         fields = "__all__"

@@ -15,7 +15,7 @@ from rest_framework.response import Response
 
 from .serializer import ProjectModelSerializer, UserModelSerializer, \
     ToDoModelSerializer, \
-    UserProjectModelSerializer, UserProjectModelSerializerBase, UserSerializerBase
+    UserProjectModelSerializer, UserProjectModelSerializerBase, UserSerializerBase, UserSerializerIsSuperuserIsStaff
 
 
 # ===== for User (User) ===========================================
@@ -28,6 +28,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
 
     def get_serializer_class(self):
+        if self.request.version == '3.0':
+            return UserSerializerIsSuperuserIsStaff
         if self.request.version == '2.0':
             return UserSerializerBase
         return UserModelSerializer
