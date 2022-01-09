@@ -14,8 +14,8 @@ from .models import Project, ToDo, UserProject
 from rest_framework.response import Response
 
 from .serializer import ProjectModelSerializer, UserModelSerializer, \
-    ToDoModelSerializer, ProjectSerializerBase, UserSerializerBase, \
-    UserProjectModelSerializer
+    ToDoModelSerializer, \
+    UserProjectModelSerializer, UserProjectModelSerializerBase, UserSerializerBase
 
 
 # ===== for User (User) ===========================================
@@ -26,6 +26,11 @@ class UserViewSet(viewsets.ModelViewSet):
     # permission_classes = [AllowAny]
     serializer_class = UserModelSerializer
     queryset = User.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.version == '2.0':
+            return UserSerializerBase
+        return UserModelSerializer
 
 
 # ===========ToD o=======================
@@ -45,5 +50,10 @@ class UserProjectTasksViewSet(viewsets.ModelViewSet):
     # permission_classes = [AllowAny]
     serializer_class = UserProjectModelSerializer
     queryset = UserProject.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return UserProjectModelSerializer # get
+        return UserProjectModelSerializerBase # post
 
 

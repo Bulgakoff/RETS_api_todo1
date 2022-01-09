@@ -3,6 +3,7 @@
 
 # from graphene_django.views import GraphQLView
 from rest_framework import permissions
+from django.urls import path, include, re_path
 from rest_framework.authtoken import views
 
 from rest_framework.routers import DefaultRouter
@@ -11,25 +12,20 @@ from mainapp.views import UserViewSet, TodoViewSet, \
     ProjectViewSet, UserProjectTasksViewSet
 
 from django.contrib import admin
-from django.urls import path, include, re_path
 
 from userapp.views import UserListAPIView
 
 router = DefaultRouter()
 
 router.register('user_base', UserViewSet)
-# router.register('user_base', UserViewSet, basename='ub')
 router.register('todo_base', TodoViewSet)
-# router.register('todo_base', TodoViewSet, basename='tb')
 router.register('pj_base', ProjectViewSet)
-# router.register('pj_base', ProjectViewSet, basename='pb')
 router.register('pj_to_users_base', UserProjectTasksViewSet)
-# router.register('pj_to_users_base', UserProjectTasksViewSet, basename='utpb')
 
 urlpatterns = [
     # NamespaceVersioning
-    path('api_version/users/0.1', include('userapp.urls', namespace='0.1')),
-    path('api_version/users/0.2', include('userapp.urls', namespace='0.2')),
+    path('api/users/0.1', include('userapp.urls', namespace='0.1')),
+    path('api/users/0.2', include('userapp.urls', namespace='0.2')),
     # UrlPathVersioning
     re_path(r'^api_version/(?P<version>\d\.\d)/users/$', UserListAPIView.as_view()),
 
