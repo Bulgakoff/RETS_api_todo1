@@ -57,10 +57,18 @@ class App extends React.Component {
         }
     }
 
+    deleteTodo(id) {
+        const headers = this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/viewsets/todo_base/${id}`, {headers})
+            .then(response => {
+                this.setState({todoes: this.state.todoes.filter((item) => item.id !== id)})
+            }).catch(error => console.log(error))
+    }
+
     set_token(token) {
         const cookies = new Cookies()
         cookies.set('token', token)
-        this.setState({'token': token}, ()=>this.load_data())
+        this.setState({'token': token}, () => this.load_data())
     }
 
     is_authenticated() {
@@ -154,7 +162,8 @@ class App extends React.Component {
                     </nav>
                     <Switch>
                         <Route exact path='/' component={() => <UserList items={this.state.users}/>}/>
-                        <Route exact path='/todoes' component={() => <TodoList items={this.state.todoes}/>}/>
+                        <Route exact path='/todoes' component={() => <TodoList items={this.state.todoes}
+                                                                               deleteTodo={(id)=>this.deleteTodo(id)} />}/>}/>
                         <Route exact path='/projects' component={() => <ProjectList items={this.state.projects}/>}/>
                         <Route exact path='/ptu_info' component={() => <PtuList items={this.state.ptus}/>}/>
                         <Route exact path='/login' component={() => <LoginForm
