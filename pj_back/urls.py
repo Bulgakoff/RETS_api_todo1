@@ -1,7 +1,7 @@
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-# from graphene_django.views import GraphQLView
+from graphene_django.views import GraphQLView
 from rest_framework import permissions
 from django.urls import path, include, re_path
 from rest_framework.authtoken import views
@@ -35,6 +35,8 @@ router.register('pj_base', ProjectViewSet)
 router.register('pj_to_users_base', UserProjectTasksViewSet)
 
 urlpatterns = [
+    # GraphQL :
+    path("graphql/", GraphQLView.as_view(graphiql=True)),
     # NamespaceVersioning
     path('api/users/0.1', include('userapp.urls', namespace='0.1')),
     path('api/users/0.2', include('userapp.urls', namespace='0.2')),

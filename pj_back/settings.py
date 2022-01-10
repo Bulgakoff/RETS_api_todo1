@@ -28,13 +28,19 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+GRAPHENE = {
+    "SCHEMA": "pj_back.schema.schema",
+}
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # Required for GraphiQL:
     'django.contrib.staticfiles',  # required for serving swagger ui's css/js files
+    "graphene_django",
     # others:
     'drf_yasg',
     'rest_framework',
