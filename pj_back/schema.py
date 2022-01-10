@@ -11,10 +11,30 @@ from mainapp.models import Project, ToDo, UserProject
 # schema = graphene.Schema(query=Query)
 
 
+
+
 class UserType(DjangoObjectType):
     class Meta:
         model = User
         fields = '__all__'
+
+
+class UserMutation(graphene.Mutation):
+    class Arguments:
+        username = graphene.String(required=True)
+        id = graphene.ID()
+
+    user = graphene.Field(UserType)
+
+    @classmethod
+    def mutate(cls, root, info, username, id):
+        user = User.objects.get(pk=id)
+        user.username = username
+        user.save()
+        return UserMutation(user=user)
+
+class Mutation(graphene.ObjectType):
+    update_author = UserMutation.Field()
 
 
 class ProjectType(DjangoObjectType):
@@ -68,4 +88,4 @@ class Query(graphene.ObjectType):
     def resolve_all_users(root, info):
         return User.objects.all()
 
-schema = graphene.Schema(query=Query)
+schema = graphene.Schema(query=Query,  mutation=Mutation)
