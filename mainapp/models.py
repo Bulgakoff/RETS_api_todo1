@@ -22,6 +22,6 @@ class ToDo(models.Model):
 
 
 class UserProject(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
-    project_id = models.ForeignKey(Project, on_delete=models.PROTECT)
-    todo_id = models.ForeignKey(ToDo, on_delete=models.PROTECT)
+    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
+    todo_id = models.ForeignKey(ToDo, on_delete=models.CASCADE)

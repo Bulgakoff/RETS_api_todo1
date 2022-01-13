@@ -20,16 +20,19 @@ const TodoItem = ({item, deleteTodo}) => {
 
 const TodoList = ({items, deleteTodo}) => {
     return (
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>text</th>
-                <th>created_at</th>
-                <th></th>
-            </tr>
-            {items.map((item) => <TodoItem item={item}
-                                           deleteTodo={deleteTodo}/>)}
-        </table>
+        <div>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>text</th>
+                    <th>created_at</th>
+                    <th></th>
+                </tr>
+                {items.map((item) => <TodoItem item={item}
+                                               deleteTodo={deleteTodo}/>)}
+            </table>
+            <Link to='/todoes/create'>Create</Link>
+        </div>
     )
 }
 

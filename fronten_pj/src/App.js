@@ -10,6 +10,7 @@ import {HashRouter, Route, Link, Switch, Redirect} from 'react-router-dom'
 import axios from 'axios'
 import LoginForm from './components/Auth.js'
 import Cookies from 'universal-cookie';
+import TodoForm from "./components/TodoForm";
 
 const NotFound404 = ({location}) => {
     return (
@@ -62,6 +63,27 @@ class App extends React.Component {
         axios.delete(`http://127.0.0.1:8000/viewsets/todo_base/${id}`, {headers})
             .then(response => {
                 this.setState({todoes: this.state.todoes.filter((item) => item.id !== id)})
+            }).catch(error => console.log(error))
+    }
+
+    // ====================# создание новой книги  из формы ...
+    createTodo(text, todo, user, project) { // сюда прилетит из формы  в итоге text= текст и user= id выбранного user
+        const headers = this.get_headers()
+        const data = {todo_id: todo, user_id: user, project_id: project}
+        axios.post(`http://127.0.0.1:8000/viewsets/pj_to_users_base/`, data, {headers})
+            .then(response => {
+                console.log(response.data)
+                let new_ptu = response.data
+                const user = this.state.users.filter((item) => item.id === new_ptu.user_id)[0]
+                const project = this.state.projects.filter((item) => item.id === new_ptu.project_id)[0]
+                const todo = this.state.todoes.filter((item) => item.id > 0)[0]
+                new_ptu.user_id = user
+                new_ptu.project_id = project
+                todo.text = text
+                new_ptu.todo_id = todo
+                console.log(new_ptu)
+
+                this.setState({ptus: [...this.state.ptus, new_ptu]})
             }).catch(error => console.log(error))
     }
 
@@ -163,9 +185,17 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path='/' component={() => <UserList items={this.state.users}/>}/>
                         <Route exact path='/todoes' component={() => <TodoList items={this.state.todoes}
-                                                                               deleteTodo={(id)=>this.deleteTodo(id)} />}/>}/>
+                                                                               deleteTodo={(id) => this.deleteTodo(id)}/>}/>}/>
                         <Route exact path='/projects' component={() => <ProjectList items={this.state.projects}/>}/>
                         <Route exact path='/ptu_info' component={() => <PtuList items={this.state.ptus}/>}/>
+
+                        <Route exact path='/todoes/create' component={() =>
+                            <TodoForm users={this.state.users}
+                                      projects={this.state.projects}
+                                      todoes={this.state.todoes}
+                                      createTodo={(text, todo, user, project) =>
+                                          this.createTodo(text, todo, user, project)}/>}/>
+
                         <Route exact path='/login' component={() => <LoginForm
                             get_token={(username, password) => this.get_token(username, password)}/>}/>
                         <Route path="/project/:id">
